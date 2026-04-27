@@ -1,4 +1,4 @@
-# Loudly Web App
+# Loudly Blog
 
 A minimal, open-source personal publishing platform built on Next.js. Your content lives in a GitHub repository and Loudly renders it.
 
