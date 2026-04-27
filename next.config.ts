@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
+  // Allow dangerouslySetInnerHTML for prose content rendered server-side
+  experimental: {},
 };
 
 export default nextConfig;

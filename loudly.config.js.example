@@ -1,0 +1,14 @@
+/** @type {import('./src/types/config').LoudlyConfig} */
+export default {
+  content: {
+    repo: "username/vault",   // GitHub repo containing your markdown content
+    branch: "public",         // branch to read from
+    path: "/content",         // path within the repo
+  },
+  site: {
+    title: "Your Name",
+    description: "Your description",
+    url: "https://yoursite.com",
+    defaultOgImage: "/og-default.png",
+  },
+};
