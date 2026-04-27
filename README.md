@@ -1,39 +1,33 @@
-# Loudly Blog
+# Loudly
 
-A minimal, open-source personal publishing platform built on Next.js. Your content lives in a GitHub repository and Loudly renders it.
+Loudly is a personal stream. One feed, every content type — short notes, long writings, images, audio, video. No algorithm, no platform, no middle man. Just you, publishing loud.
 
-## The idea
+## What you can publish
 
-Most personal sites force you to commit to a CMS, a database, or a hosting platform that owns your content. Loudly takes a different approach: your writing lives in a plain-text GitHub repository that you control. The site is just a reader.
+| Type | What it is | Analogue |
+|------|-----------|----------|
+| `note` | Short thoughts, links, quick observations | X / Twitter |
+| `writing` | Essays, articles, long-form posts | Blog |
+| `image` | Photos, artwork, visuals | Instagram |
+| `audio` | Tracks, recordings, podcasts | SoundCloud |
+| `video` | Clips, films, recordings | YouTube |
 
-This separation means:
-
-- **Your vault is portable.** Markdown files in Git are readable without any app, forever.
-- **Publishing is a branch.** You decide what's public by controlling a branch (e.g. `public`). Drafts stay on other branches, never exposed.
-- **No database, no CMS admin.** The GitHub API is the backend. There's nothing to maintain.
-- **Private content stays private.** You can use a private repo — only posts with `status: public` in their frontmatter are rendered.
+Everything lands in the same stream, in reverse chronological order. Domain tags (`tech`, `art`, `music`, `personal`) let readers filter to what they care about.
 
 ## How it works
 
-Content is fetched at request time from the GitHub API (with 60-second ISR revalidation). The site reads markdown files from a configured repo/branch/path, parses frontmatter with gray-matter, and renders them. No build step is needed when you publish — just push to the public branch.
+Your content lives in a plain-text GitHub repository — the *vault* — that you fully own. Loudly reads it and renders the stream. The site is just a reader; the vault is the source of truth.
 
-Configuration is a single file, `loudly.config.js` (gitignored — copy from `loudly.config.js.example`):
+Content is fetched at request time from the GitHub API (with 60-second ISR revalidation). No build step is needed when you publish — push a file with `status: public` to the public branch and it appears in the stream.
 
-```js
-export default {
-  content: {
-    repo: "your-username/your-vault",
-    branch: "public",
-    path: "/content",
-  },
-  site: {
-    title: "Your Name",
-    description: "Your description",
-    url: "https://yoursite.com",
-    defaultOgImage: "/og-default.png",
-  },
-};
-```
+## Why
+
+Every publishing platform either owns your content or forces you into a single format. Loudly treats your vault as a first-class artifact: plain markdown files, versioned in git, readable without any tooling, forever.
+
+- **One stream, every type.** Notes and essays and images coexist in the same feed rather than being spread across different platforms.
+- **Publishing is a branch.** The `public` branch is what gets served. Drafts stay on other branches, never exposed.
+- **No database, no CMS.** The GitHub API is the backend. There's nothing to maintain.
+- **Private content stays private.** Use a private repo — only posts with `status: public` in their frontmatter are rendered.
 
 ## Content format
 
@@ -41,10 +35,14 @@ Each post is a markdown file with YAML frontmatter:
 
 ```markdown
 ---
-title: My post
+title: My post          # optional for notes
 date: 2026-04-27
-type: tech          # tech | art | music | personal
-status: public      # only "public" posts are rendered
+type: writing           # note | writing | image | audio | video
+domain: tech            # tech | art | music | personal
+status: public          # only "public" posts appear in the stream
+tags: [optional, tags]
+cover: https://...      # image URL (image type)
+url: https://...        # external media URL (audio/video type)
 og:
   description: Optional OG description override
 ---
@@ -65,6 +63,23 @@ Set your GitHub token (required for private repos, recommended to avoid rate lim
 ```bash
 cp .env.local.example .env.local
 # add GITHUB_TOKEN=your_token
+```
+
+```js
+// loudly.config.js
+export default {
+  content: {
+    repo: "your-username/your-vault",
+    branch: "public",
+    path: "/content",
+  },
+  site: {
+    title: "Your Name",
+    description: "Your description",
+    url: "https://yoursite.com",
+    defaultOgImage: "/og-default.png",
+  },
+};
 ```
 
 Then:
