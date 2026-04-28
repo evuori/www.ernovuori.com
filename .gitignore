@@ -35,7 +35,7 @@ yarn-error.log*
 .env.prod
 
 # loudly config (contains personal repo/site details)
-loudly.config.js
+#loudly.config.js
 
 # vercel
 .vercel
