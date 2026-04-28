@@ -8,6 +8,7 @@ export interface LoudlyConfig {
     title: string;
     description: string;
     url?: string;
+    logo?: string;
     defaultOgImage?: string;
   };
 }

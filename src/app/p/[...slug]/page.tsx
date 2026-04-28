@@ -27,12 +27,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = frontmatter.og?.description ?? excerpt;
   const image = frontmatter.og?.image ?? frontmatter.cover ?? config.site.defaultOgImage;
 
+  const postUrl = config.site.url
+    ? new URL(`/p/${slug.join("/")}`, config.site.url).toString()
+    : undefined;
+
   return {
     title,
     description,
     openGraph: {
       title,
       description,
+      url: postUrl,
+      type: "article",
       images: image ? [image] : undefined,
     },
     twitter: {

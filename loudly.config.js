@@ -9,6 +9,7 @@ export default {
     title: "Erno Vuori",
     description: "Your description",
     url: "https://ernovuori.com",
+    logo: "/site-logo-icon.png",
     defaultOgImage: "/og-default.png",
   },
 };
